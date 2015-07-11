@@ -1,5 +1,5 @@
 # Config file
-config.py
+dota2_hero_recommendation/config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
