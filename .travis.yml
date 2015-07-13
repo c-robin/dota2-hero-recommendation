@@ -9,4 +9,4 @@ env:
 install:
   - pip install -q Django==$DJANGO --use-mirrors
 script:
-python manage.py test
+  - python manage.py test
