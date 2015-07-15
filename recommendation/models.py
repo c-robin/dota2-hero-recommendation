@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Hero(models.Model):
-	dota2_hero_id = models.IntegerField(unique= True)
+	dota2_hero_id = models.IntegerField(unique=True)
 	name = models.CharField(max_length=25)
 
 	def __str__(self):
@@ -17,7 +17,7 @@ class Duel(models.Model):
 	hero2_victory = models.IntegerField()
 	
 	def __str__(self):
-		return hero1 + " - " + hero2 + " : " + hero1_victory + " - "+  hero2_victory
+		return str(self.hero1) + " - " + str(self.hero2) + " : " + str(self.hero1_victory) + " - "+  str(self.hero2_victory)
 		
 class Team(models.Model):
 	hero1 = models.ForeignKey('Hero', related_name="hero_team_1")
@@ -27,8 +27,8 @@ class Team(models.Model):
 	hero5 = models.ForeignKey('Hero', related_name="hero_team_5")
 
 	def __str__(self):
-		heroes = [hero1, hero2, hero3, hero4, hero5]
-		return heroes.join(' ')
+		heroes = [self.hero1, self.hero2, self.hero3, self.hero4, self.hero5]
+		return " ".join(map(lambda x:str(x), heroes))
 		
 class Match(models.Model):
 	team1 = models.ForeignKey('Team', related_name="team1")
@@ -37,4 +37,4 @@ class Match(models.Model):
 	team2_victory = models.IntegerField()
 
 	def __str__(self):
-		return team1 + " - " + team2 + " : " + team1_victory + " - "+  team2_victory
+		return str(self.team1) + " - " + str(self.team2) + " : " + str(self.team1_victory) + " - "+  str(self.team2_victory)
