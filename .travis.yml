@@ -11,6 +11,6 @@ script:
   - python manage.py makemigrations 
   - python manage.py migrate
   - python manage.py test
-  - coverage --source=recommendation run manage.py test
+  - coverage run --source=recommendation manage.py test
 after_success:
   - coveralls
