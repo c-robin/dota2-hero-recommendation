@@ -7,3 +7,7 @@ def home(request):
     tasks.logger.delay()
     return HttpResponse()
     
+    
+def update_hero(request):
+    tasks.update_hero.delay()
+    return HttpResponse()
