@@ -1,5 +1,5 @@
 # Config file
-recommendation/config.py
+config.py
 
 #DB
 db.sqlite3

@@ -1,8 +1,13 @@
 from __future__ import absolute_import
 
-from celery import shared_task
-from recommendation.models import Hero
 import requests
+import subprocess
+import json
+
+from django.core.exceptions import ObjectDoesNotExist
+from recommendation.models import Hero
+
+from celery import shared_task
 
 @shared_task
 def logger():
@@ -11,13 +16,16 @@ def logger():
         
 @shared_task
 def update_hero():
-    execfile("config.py", config)
+    config = {}
+    with open("config.py") as f:
+        code = compile(f.read(), "config.py", 'exec')
+        exec(code, config)
     api_key = config['API_KEY']
     url = 'https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key='+ api_key+'&language=en_us'
     r = requests.get(url, timeout=None, proxies = None)
-    json_heroes = json.loads(r)
+    json_heroes = json.loads(r.text)
     
-    for hero in json_heroes['result']['heores']:
+    for hero in json_heroes['result']['heroes']:
         try:
             Hero.objects.get(dota2_hero_id=hero['id'])
         except ObjectDoesNotExist:
