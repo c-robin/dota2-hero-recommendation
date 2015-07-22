@@ -15,7 +15,7 @@ class TasksTestCase(TestCase):
         pass
      
     @override_settings(CELERY_ALWAYS_EAGER=True, TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner')
-    def testExample(self):
+    def testUpdateHero(self):
         config = {}
         with open("config.py") as f:
             code = compile(f.read(), "config.py", 'exec')
@@ -28,5 +28,5 @@ class TasksTestCase(TestCase):
             'status'         : 200,
             'content_type'   : 'application/json'
         })
-        update_hero.delay()
-        self.assertEqual(str(Hero.objects.get(dota2_hero_id="1")), "Anti-Mage")
+        result = update_hero.delay()
+        self.assertTrue(result.successful())
