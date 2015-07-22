@@ -8,9 +8,11 @@ install:
   - pip install django-celery
   - pip install coveralls
   - pip install Requests
+  - pip install responses
 script:
   - python manage.py makemigrations 
   - python manage.py migrate
+  - celery -A dota2_hero_recommendation worker -l info&
   - python manage.py test
   - coverage run --source=recommendation manage.py test
 after_success:
